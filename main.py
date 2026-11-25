@@ -13,13 +13,21 @@ ENTRY = "You hereby grant the Company a perpetual, royalty-free license to your 
 MAX_CHARS = 200
 
 
+def check_length(text):
+    """Return an error string if text exceeds MAX_CHARS, else None."""
+    if len(text) > MAX_CHARS:
+        return "entry exceeds 200 characters"
+    return None
+
+
 def validate(text):
     if not text or not text.strip():
         return "entry is empty or whitespace-only"
     if text != text.strip():
         return "entry has leading or trailing whitespace"
-    if len(text) > MAX_CHARS:
-        return "entry exceeds 200 characters"
+    length_error = check_length(text)
+    if length_error:
+        return length_error
     if "\n" in text or "\r" in text:
         return "entry must be a single line"
     for ch in text:
